@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodCarRentals", "src\GoodC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodCarRentals.Tests", "tests\GoodCarRentals.Tests.csproj", "{E7409633-24C7-442C-945E-577F2D45E9C6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{80EF3AED-96CE-45E3-8954-957A249290A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8D64073A-05C8-461C-AAB9-776CFB2E83E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,9 @@ Global
 		{E7409633-24C7-442C-945E-577F2D45E9C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7409633-24C7-442C-945E-577F2D45E9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7409633-24C7-442C-945E-577F2D45E9C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E7409633-24C7-442C-945E-577F2D45E9C6} = {8D64073A-05C8-461C-AAB9-776CFB2E83E5}
+		{E7675FD8-279F-431D-B3E6-A5FBD71133EB} = {80EF3AED-96CE-45E3-8954-957A249290A9}
 	EndGlobalSection
 EndGlobal
