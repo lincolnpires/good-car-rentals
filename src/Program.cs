@@ -15,9 +15,12 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<CarRentalsContext>();
     context.Database.EnsureCreated();
-}
-if (!app.Environment.IsDevelopment())
-{
+
+    if (!app.Environment.IsDevelopment())
+    {
+        // data will be always renewed in development
+        context.SeedDevelopmentData();
+    }
 }
 // Have error handler in production as well - avoid different behavior between environments as well
 app.UseExceptionHandler("/Home/Error");
