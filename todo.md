@@ -1,7 +1,7 @@
 - [x] add initial files (such as `.gitignore`, `.gitattributes`, etc.)
-- [ ] create a new repository on GitHub
-- [ ] add a new dotnet project to `src` dir - name it appropriately
-- [ ] add a new dotnet solution file to the root of the repository  
+- [x] create a new repository on GitHub
+- [x] add a new dotnet project to `src` dir - name it appropriately
+- [x] add a new dotnet solution file to the root of the repository  
   - [ ] and add the project to the solution
 - [ ] create the initial model classes
 - [ ] scaffold the database and controllers - using `ef`, and `aspnet-codegenerator`
