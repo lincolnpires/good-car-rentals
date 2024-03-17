@@ -1,11 +1,11 @@
 - [x] add initial files (such as `.gitignore`, `.gitattributes`, etc.)
 - [x] create a new repository on GitHub
-- [x] add a new dotnet project to `src` dir - name it appropriately
+- [x] add a new dotnet project to `src` folder - name it appropriately
 - [x] add a new dotnet solution file to the root of the repository  
-  - [ ] and add the project to the solution
+  - [x] and add the project to the solution
 - [ ] create the initial model classes
 - [ ] scaffold the database and controllers - using `ef`, and `aspnet-codegenerator`
-- [ ] (optionally) add a new dotnet test project to `tests` dir
+- [ ] (optionally) add a new dotnet test project to `tests` folder
 - [ ] manually test the project CRUD operations and ensure that they work
 - [ ] code the core business logic - rental state, and car rental history.
 - [ ] re-test everything
@@ -16,7 +16,7 @@
   - [ ] maybe add a build script or `dockerfile`.
 - [ ] prepare for the presentation - make sure to have a working demo
 - [ ] even if the time is up, having some time before the presentation, try to:
-  - [ ] add a simple deployment plan (`infra` dir)
-  - [ ] add a simple CI/CD pipeline (`.github/workflows` dir)
+  - [ ] add a simple deployment plan (`infra` and `.github` folders)
+  - [ ] add some security features (e.g. `https`, `cors`, identity `jwt`, etc.)
   - [ ] expand the project with some additional features
   - [ ] deploy to DigitalOcean or Azure - or both (⌐■_■)
