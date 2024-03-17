@@ -1,6 +1,9 @@
 # may be sensitive - company info, etc.
 docs/assignment.md
 
+# user secrets - use AppSettings.Development.json as a template
+appsettings.json
+
 # Created by https://www.toptal.com/developers/gitignore/api/aspnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=aspnetcore
 
