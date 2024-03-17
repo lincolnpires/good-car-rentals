@@ -16,7 +16,7 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<CarRentalsContext>();
     context.Database.EnsureCreated();
 
-    if (!app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment())
     {
         // data will be always renewed in development
         context.SeedDevelopmentData();
