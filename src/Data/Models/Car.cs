@@ -5,7 +5,7 @@ public class Car
     public Guid Id { get; set; }
     public required string Make { get; set; }
     public required string Model { get; set; }
-    public string Year { get; set; }
+    public required string Year { get; set; }
     public int Kilometers { get; set; } = default!;
 
     public bool IsRented { get; set; } = false;

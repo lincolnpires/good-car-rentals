@@ -6,7 +6,9 @@ namespace GoodCarRentals.Data.Models;
 public class Rental
 {
     public Guid Id { get; set; }
+    public required Guid CarId { get; set; }
     public required Car Car { get; set; } = default!;
+    public required Guid CustomerId { get; set; }
     public required Customer Customer { get; set; } = default!;
 
     [DataType(DataType.Date)]
@@ -18,5 +20,5 @@ public class Rental
     [Column(TypeName = "decimal(18, 2)")]
     public required decimal TotalCost { get; set; }
 
-    public bool IsReturned { get; set; } = false;
+    public bool IsReturned { get; set; }
 }

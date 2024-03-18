@@ -14,6 +14,9 @@ However all that can be refactored and improved later on.
 My idea is that there should be a service layer, so that if we need to move to be API-accessible, we can.
 And most people would prefer to have a persistence layer/repository as well.
 
+- Monday: didn't do much, mostly just reviewed everything and scaffolded Rentals. Also noticed the screens are not that nice, but not the focus. Changed the models a bit - I don't know what exactly I want for the rentals. ~20 minutes
+
+
 
 ```bash
 gh repo create
@@ -45,3 +48,4 @@ dotnet aspnet-codegenerator \
   --useDefaultLayout \
   --controllerNamespace GoodCarRentals.Controllers
 ```
+Sumup: ~95m
