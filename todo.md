@@ -6,10 +6,14 @@
 - [x] create the initial model classes
 - [x] scaffold the database and controllers - using `ef`, and `aspnet-codegenerator`
 - [ ] (optionally) add a new dotnet test project to `tests` folder
-- [ ] manually test the project CRUD operations and ensure that they work
+- [x] manually test the project CRUD operations and ensure that they work
 - [ ] code the core business logic - rental state, and car rental history.
 - [ ] re-test everything
 - [ ] refactor the code, write some tests, and ensure that everything works
+  - [ ] add a service layer (at least)
+  - [ ] add Logger maybe
+  - [ ] add js validation and handle exceptions
+  - [ ] maybe add some custom pages (e.g. `error`, `notfound`, etc.)
 - [ ] write a report explaining the design decisions
 - [ ] write a customer documentation (perhaps keep the design doc together)
 - [ ] write the `ReadMe` file with the instructions on how to build and run the project

@@ -1,4 +1,4 @@
-Started at around 3:30 PM
+Started at around 3:30 PM on Sunday.
 - Using C# and .NET Core with scaffolding to speed up the process
 - Starting out on VSCode and then moving to Rider - more robust.
   - Having VSCode as editor (git, md, etc.), but Rider as IDE
@@ -6,7 +6,14 @@ Started at around 3:30 PM
 Some coding
 - Adding models, db and packages needed, etc. ~20 minutes
 - Scaffolded the MVC cars and fixed issues ~5 minutes
-- Testing
+- Testing - everything good.
+
+Just a side note: the scaffolding is great to speed up the process, but it's not the best way to build a "good" product.
+The Controllers are doing too much, and the models are not properly structured. The database is not normalized, and the code is not tested.
+However all that can be refactored and improved later on.
+My idea is that there should be a service layer, so that if we need to move to be API-accessible, we can.
+And most people would prefer to have a persistence layer/repository as well.
+
 
 ```bash
 gh repo create
