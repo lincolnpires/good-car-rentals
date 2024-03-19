@@ -2,13 +2,78 @@
 using GoodCarRentals.Data.Models;
 using GoodCarRentals.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GoodCarRentals.Application;
 
 public class RentalsService(CarRentalsContext dbContext)
 {
+    public async Task<RentCarViewModel> InitializeRentCarSelects()
+    {
+        var model = new RentCarViewModel();
+
+        var customerSelect = await PopulateCustomerSelect();
+        model.Customers = customerSelect;
+
+        var carSelect = await PopulateCarSelect();
+        model.AvailableCars = carSelect;
+
+        return model;
+    }
+
+    public async Task<RentCarViewModel> InitializeRentCarSelects(RentCarViewModel model)
+    {
+        if (model == null)
+        {
+            throw new InvalidOperationException("Rental not found");
+        }
+
+        var customerSelect = await PopulateCustomerSelect();
+        model.Customers = customerSelect;
+
+        var carSelect = await PopulateCarSelect();
+        model.AvailableCars = carSelect;
+
+        return model;
+    }
+
+    private async Task<List<SelectListItem>> PopulateCarSelect()
+    {
+        var carSelect = new List<SelectListItem>();
+        carSelect.Insert(0, new SelectListItem
+        {
+            Value = "", // empty
+            Text = "Select a car"
+        });
+        var cars = await dbContext.Cars
+            .Where(car => !car.IsRented)
+            .Select(car => new SelectListItem
+            {
+                Value = car.Id.ToString("N"), // digits only
+                Text = car.Make + " " + car.Model + " " + car.Year
+            })
+            .ToListAsync();
+        carSelect.AddRange(cars);
+        return carSelect;
+    }
+
+    private async Task<List<SelectListItem>> PopulateCustomerSelect()
+    {
+        var customerSelect = await dbContext.Customers
+            .Select(customer => new SelectListItem
+            {
+                Value = customer.Id.ToString("N"), // digits only
+                Text = customer.Name
+            })
+            .ToListAsync();
+        customerSelect.Insert(0, new SelectListItem
+        {
+            Value = "",
+            Text = "Select a customer"
+        });
+        return customerSelect;
+    }
+
     public async Task<IEnumerable<RentalDetailsViewModel>> GetAllRentals()
     {
         var rentals = await dbContext.Rentals
@@ -79,8 +144,8 @@ public class RentalsService(CarRentalsContext dbContext)
         {
             CarId = rentCarViewModel.CarId,
             CustomerId = rentCarViewModel.CustomerId,
-            RentalDate = rentCarViewModel.RentalDate,
-            ExpectedReturnDate = rentCarViewModel.ExpectedReturnDate,
+            RentalDate = rentCarViewModel.RentalDate.Value,
+            ExpectedReturnDate = rentCarViewModel.ExpectedReturnDate.Value,
             TotalCost = rentCarViewModel.TotalCost
         };
         return rental;
@@ -100,21 +165,22 @@ public class RentalsService(CarRentalsContext dbContext)
         // What I would not let be here is the return data.
         rental.CarId = rentCarViewModel.CarId;
         rental.CustomerId = rentCarViewModel.CustomerId;
-        rental.RentalDate = rentCarViewModel.RentalDate;
+        rental.RentalDate = rentCarViewModel.RentalDate.Value;
         rental.TotalCost = rentCarViewModel.TotalCost;
-        rental.ExpectedReturnDate = rentCarViewModel.ExpectedReturnDate;
+        rental.ExpectedReturnDate = rentCarViewModel.ExpectedReturnDate.Value;
 
         dbContext.Rentals.Update(rental);
         await dbContext.SaveChangesAsync();
         return MapToDetails(rental);
     }
 
-    public async Task<RentalDetailsViewModel> ReturnRental(ReturnCarViewModel returningRental)
+    public async Task<RentalDetailsViewModel?> ReturnRental(ReturnCarViewModel returningRental)
     {
         var rental = await dbContext.Rentals.FindAsync(returningRental.Id);
         if (rental == null)
         {
-            throw new InvalidOperationException("Rental not found");
+            // throw new InvalidOperationException("Rental not found"); // just log?
+            return null;
         }
         if (rental.IsReturned)
         {
