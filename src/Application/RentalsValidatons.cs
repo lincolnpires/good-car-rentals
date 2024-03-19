@@ -27,12 +27,15 @@ public class RentCarValidator : AbstractValidator<RentCarViewModel>
         // .WithMessage("Total cost must be between 10 and 10000");
 
         // WARN - Especial case: the car must be available for rental
-        RuleFor(x => x).MustAsync(async (carRental, cancellationToken) =>
-        {
-            var car = await dbContext.Cars
-                .FindAsync(new object?[] { carRental.CarId }, cancellationToken: cancellationToken);
-            return car is { IsRented: true };
-        }).WithMessage("Car is already rented");
+        RuleFor(x => x)
+            .MustAsync(async (carRental, cancellationToken) =>
+            {
+                var car = await dbContext.Cars
+                    .FindAsync(new object?[] { carRental.CarId }, cancellationToken: cancellationToken);
+                return car is null or { IsRented: false };
+            })
+            // .When(rental => rental.CarId != Guid.Empty) //eh?
+            .WithMessage("Car is already rented");
 
         // depending on the business, maybe the customer can only have a certain number of rentals as well...
         // skipping that for now

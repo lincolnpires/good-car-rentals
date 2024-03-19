@@ -49,7 +49,7 @@ public class RentalsService(CarRentalsContext dbContext)
             .Where(car => !car.IsRented)
             .Select(car => new SelectListItem
             {
-                Value = car.Id.ToString("N"), // digits only
+                Value = car.Id.ToString("D"), // need hyphens LOL
                 Text = car.Make + " " + car.Model + " " + car.Year
             })
             .ToListAsync();
@@ -62,7 +62,7 @@ public class RentalsService(CarRentalsContext dbContext)
         var customerSelect = await dbContext.Customers
             .Select(customer => new SelectListItem
             {
-                Value = customer.Id.ToString("N"), // digits only
+                Value = customer.Id.ToString("D"),
                 Text = customer.Name
             })
             .ToListAsync();

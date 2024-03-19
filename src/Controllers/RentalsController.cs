@@ -100,7 +100,11 @@ public class RentalsController(
 
         var result = await rentValidator.ValidateAsync(rental);
         if (!result.IsValid) result.AddToModelState(ModelState);
-        if (!ModelState.IsValid) return View(rental); // validation errors
+        if (!ModelState.IsValid)
+        {
+            var model = await rentalsService.InitializeRentCarSelects(rental);
+            return View(model); // validation errors
+        }
 
         try
         {
