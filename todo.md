@@ -10,7 +10,7 @@
 - [ ] code the core business logic - rental state, and car rental history.
 - [ ] re-test everything
 - [ ] refactor the code, write some tests, and ensure that everything works
-  - [ ] add a service layer (at least)
+  - [x] add a service layer (at least)
   - [ ] add Logger maybe
   - [ ] add js validation and handle exceptions
   - [ ] maybe add some custom pages (e.g. `error`, `notfound`, etc.)

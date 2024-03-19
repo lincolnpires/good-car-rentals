@@ -16,7 +16,8 @@ And most people would prefer to have a persistence layer/repository as well.
 
 - Monday: didn't do much, mostly just reviewed everything and scaffolded Rentals. Also noticed the screens are not that nice, but not the focus. Changed the models a bit - I don't know what exactly I want for the rentals. ~20 minutes
 
-
+- Tuesday: checked the DB, the models, added viewModels, and started the app/service part ... Lost a bunch of time reconfiguring EF. ~1h
+- I started using copilot to speed me up as well, it does know how I code, so it's a bit faster. Doing some refactorings.
 
 ```bash
 gh repo create
@@ -48,4 +49,4 @@ dotnet aspnet-codegenerator \
   --useDefaultLayout \
   --controllerNamespace GoodCarRentals.Controllers
 ```
-Sumup: ~95m
+Sumup: ~155m (2h35m)

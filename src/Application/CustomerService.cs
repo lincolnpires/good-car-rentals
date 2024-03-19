@@ -39,12 +39,12 @@ public class CustomerService(CarRentalsContext dbContext)
         return MapToViewModel(customer);
     }
 
-    public async Task<CustomerViewModel> UpdateCustomer(CustomerViewModel customerViewModel)
+    public async Task<CustomerViewModel?> UpdateCustomer(CustomerViewModel customerViewModel)
     {
         var customer = await dbContext.Customers.FindAsync(customerViewModel.Id);
         if (customer == null)
         {
-            return null;
+            return null; // can be null or throw an exception
         }
         UpdateCustomer(customerViewModel, customer);
         dbContext.Customers.Update(customer);

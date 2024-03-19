@@ -100,6 +100,7 @@ namespace GoodCarRentals.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 return Problem();
+                // log this!
             }
         }
 
