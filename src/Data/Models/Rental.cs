@@ -11,10 +11,10 @@ public class Rental
     public required Guid CustomerId { get; set; }
     public Customer Customer { get; set; } = default!;
 
-    [DataType(DataType.Date)]
+    [DataType(DataType.DateTime)] // cars in Austria can be rented by the hour
     public required DateTime RentalDate { get; set; }
 
-    [DataType(DataType.Date)]
+    [DataType(DataType.DateTime)]
     public DateTime? ReturnDate { get; set; }
 
     [Column(TypeName = "decimal(18, 2)")]
@@ -23,4 +23,7 @@ public class Rental
     public bool IsReturned { get; set; }
 
     public int? KilometersAtRental { get; set; }
+
+    [DataType(DataType.DateTime)]
+    public DateTime ExpectedReturnDate { get; set; }
 }

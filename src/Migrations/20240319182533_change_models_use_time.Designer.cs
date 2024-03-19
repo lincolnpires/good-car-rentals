@@ -3,6 +3,7 @@ using System;
 using GoodCarRentals.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoodCarRentals.Migrations
 {
     [DbContext(typeof(CarRentalsContext))]
-    partial class CarRentalsContextModelSnapshot : ModelSnapshot
+    [Migration("20240319182533_change_models_use_time")]
+    partial class change_models_use_time
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
