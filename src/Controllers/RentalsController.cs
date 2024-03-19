@@ -117,23 +117,24 @@ namespace GoodCarRentals.Controllers
             return View(rental);
         }
 
+        // TODO: maybe use for cancelations
         // GET: Rentals/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var rental = await _context.Rentals
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (rental == null)
-            {
-                return NotFound();
-            }
-
-            return View(rental);
-        }
+        // public async Task<IActionResult> Delete(Guid? id)
+        // {
+        //     if (id == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     var rental = await _context.Rentals
+        //         .FirstOrDefaultAsync(m => m.Id == id);
+        //     if (rental == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     return View(rental);
+        // }
 
         // POST: Rentals/Delete/5
         [HttpPost, ActionName("Delete")]
