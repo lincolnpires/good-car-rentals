@@ -1,5 +1,4 @@
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using GoodCarRentals.Application;
 using GoodCarRentals.Data;
 using GoodCarRentals.Models;
@@ -13,9 +12,7 @@ builder.Services.AddScoped<RentalsService>();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddFluentValidationAutoValidation()
-    .AddFluentValidationClientsideAdapters(); // I just found this, and it's cool! Hope it works!
-builder.Services.AddTransient<IValidator<RentCarViewModel>,RentCarValidator>();
+builder.Services.AddTransient<IValidator<RentCarViewModel>, RentCarValidator>();
 builder.Services.AddTransient<IValidator<ReturnCarViewModel>, ReturnCarValidator>();
 
 var app = builder.Build();
