@@ -63,16 +63,16 @@ public class CarRentalsContext: DbContext
 
         var cars = new List<Car>
         {
-            new() { Make = "Toyota", Model = "Corolla", Year = 2024, Kilometers = 1000 },
-            new() { Make = "Honda", Model = "Civic", Year = 2023, Kilometers = 2000 },
-            new() { Make = "Ford", Model = "Mustang", Year = 2022, Kilometers = 3000 },
-            new() { Make = "Chevrolet", Model = "Malibu", Year = 2021, Kilometers = 4000 },
-            new() { Make = "Nissan", Model = "Altima", Year = 2020, Kilometers = 5000 },
-            new() { Make = "Toyota", Model = "Sienna", Year = 2019, Kilometers = 7000 },
-            new() { Make = "Honda", Model = "City", Year = 2018, Kilometers = 9000 },
-            new() { Make = "Ford", Model = "Fusion", Year = 2017, Kilometers = 10000 },
-            new() { Make = "Chevrolet", Model = "Camaro", Year = 2016, Kilometers = 15000 },
-            new() { Make = "Nissan", Model = "Rogue", Year = 2015, Kilometers = 20000 }
+            new() { Make = "Toyota", Model = "Corolla", Year = 2024, Kilometers = 1000, PlateNumber = "ABC123"},
+            new() { Make = "Honda", Model = "Civic", Year = 2023, Kilometers = 2000, PlateNumber = "DEF456"},
+            new() { Make = "Ford", Model = "Mustang", Year = 2022, Kilometers = 3000, PlateNumber = "GHI789"},
+            new() { Make = "Chevrolet", Model = "Malibu", Year = 2021, Kilometers = 4000, PlateNumber = "JKL012"},
+            new() { Make = "Nissan", Model = "Altima", Year = 2020, Kilometers = 5000, PlateNumber = "MNO345"},
+            new() { Make = "Toyota", Model = "Sienna", Year = 2019, Kilometers = 7000, PlateNumber = "PQR678" },
+            new() { Make = "Honda", Model = "City", Year = 2018, Kilometers = 9000, PlateNumber = "STU901"},
+            new() { Make = "Ford", Model = "Fusion", Year = 2017, Kilometers = 10000, PlateNumber = "VWX234"},
+            new() { Make = "Chevrolet", Model = "Camaro", Year = 2016, Kilometers = 15000, PlateNumber = "YZA567"},
+            new() { Make = "Nissan", Model = "Rogue", Year = 2015, Kilometers = 20000, PlateNumber = "BCD890"}
         };
 
         Cars.AddRange(cars);

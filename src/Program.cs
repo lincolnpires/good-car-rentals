@@ -1,9 +1,11 @@
+using GoodCarRentals.Application;
 using GoodCarRentals.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<CarRentalsContext>();
+builder.Services.AddScoped<CustomerService>();
 
 builder.Services.AddControllersWithViews();
 

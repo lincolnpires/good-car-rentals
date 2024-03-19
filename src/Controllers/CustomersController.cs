@@ -2,27 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GoodCarRentals.Application;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using GoodCarRentals.Data;
-using GoodCarRentals.Data.Models;
+using GoodCarRentals.Models;
 
 namespace GoodCarRentals.Controllers
 {
-    public class CustomersController : Controller
+    public class CustomersController(CustomerService customerService) : Controller
     {
-        private readonly CarRentalsContext _context;
-
-        public CustomersController(CarRentalsContext context)
-        {
-            _context = context;
-        }
-
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            return View(await customerService.GetAllCustomers());
         }
 
         // GET: Customers/Details/5
@@ -33,8 +26,7 @@ namespace GoodCarRentals.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var customer = await customerService.GetCustomerById(id.Value);
             if (customer == null)
             {
                 return NotFound();
@@ -51,19 +43,17 @@ namespace GoodCarRentals.Controllers
 
         // POST: Customers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // using the Bind attribute. ([Bind("bla")]
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Phone,Address,Country")] Customer customer)
+        public async Task<IActionResult> Create(
+            [Bind("Name,Email,Phone,Address,Country")] CustomerViewModel customer)
         {
-            if (ModelState.IsValid)
-            {
-                customer.Id = Guid.NewGuid();
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(customer);
+            if (!ModelState.IsValid) return View(customer);
+
+            var newCustomer = await customerService.CreateCustomer(customer);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Customers/Edit/5
@@ -74,7 +64,7 @@ namespace GoodCarRentals.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await customerService.GetCustomerById(id.Value);
             if (customer == null)
             {
                 return NotFound();
@@ -87,34 +77,30 @@ namespace GoodCarRentals.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Email,Phone,Address,Country")] Customer customer)
+        public async Task<IActionResult> Edit(Guid id,
+            [Bind("Id,Name,Email,Phone,Address,Country")] CustomerViewModel customer)
         {
             if (id != customer.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(customer); // with validation errors
+
+            try
             {
-                try
+                var updatedCustomer = await customerService.UpdateCustomer(customer);
+                if (updatedCustomer == null)
                 {
-                    _context.Update(customer);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CustomerExists(customer.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            catch (DbUpdateConcurrencyException)
+            {
+                return Problem();
+            }
         }
 
         // GET: Customers/Delete/5
@@ -125,8 +111,7 @@ namespace GoodCarRentals.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var customer = await customerService.GetCustomerById(id.Value);
             if (customer == null)
             {
                 return NotFound();
@@ -140,19 +125,18 @@ namespace GoodCarRentals.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer != null)
+            var customer = await customerService.DeleteCustomer(id);
+            if (!customer)
             {
-                _context.Customers.Remove(customer);
+                return NotFound();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(Guid id)
-        {
-            return _context.Customers.Any(e => e.Id == id);
-        }
+        // private bool CustomerExists(Guid id)
+        // {
+        //     return customerService.Customers.Any(e => e.Id == id);
+        // }
     }
 }
