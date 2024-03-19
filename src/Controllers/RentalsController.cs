@@ -2,27 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GoodCarRentals.Application;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GoodCarRentals.Data;
 using GoodCarRentals.Data.Models;
+using GoodCarRentals.Models;
 
 namespace GoodCarRentals.Controllers
 {
-    public class RentalsController : Controller
+    public class RentalsController(RentalsService rentalsService) : Controller
     {
-        private readonly CarRentalsContext _context;
-
-        public RentalsController(CarRentalsContext context)
-        {
-            _context = context;
-        }
-
         // GET: Rentals
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Rentals.ToListAsync());
+            return View(await rentalsService.GetAllRentals());
         }
 
         // GET: Rentals/Details/5
@@ -33,8 +28,7 @@ namespace GoodCarRentals.Controllers
                 return NotFound();
             }
 
-            var rental = await _context.Rentals
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var rental = await rentalsService.GetRentalDetailsById(id.Value);
             if (rental == null)
             {
                 return NotFound();
@@ -54,16 +48,12 @@ namespace GoodCarRentals.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RentalDate,ReturnDate,TotalCost,IsReturned")] Rental rental)
+        public async Task<IActionResult> Create(
+            [Bind("RentalDate,ReturnDate,TotalCost,IsReturned")] RentCarViewModel rental)
         {
-            if (ModelState.IsValid)
-            {
-                rental.Id = Guid.NewGuid();
-                _context.Add(rental);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(rental);
+            if (!ModelState.IsValid) return View(rental);
+            await rentalsService.CreateRental(rental);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Rentals/Edit/5
@@ -74,7 +64,7 @@ namespace GoodCarRentals.Controllers
                 return NotFound();
             }
 
-            var rental = await _context.Rentals.FindAsync(id);
+            var rental = await rentalsService.GetRentalById(id.Value);
             if (rental == null)
             {
                 return NotFound();
@@ -87,34 +77,59 @@ namespace GoodCarRentals.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RentalDate,ReturnDate,TotalCost,IsReturned")] Rental rental)
+        public async Task<IActionResult> Edit(Guid id,
+            [Bind("Id,RentalDate,ReturnDate,TotalCost,IsReturned")] RentCarViewModel rental)
         {
             if (id != rental.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(rental); // validation errors
+
+            try
             {
-                try
+                var updatedRental = await rentalsService.UpdateRental(rental);
+                if (updatedRental == null)
                 {
-                    _context.Update(rental);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RentalExists(rental.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(rental);
+            catch (DbUpdateConcurrencyException)
+            {
+                return Problem();
+                // log this!
+            }
+        }
+
+        // POST: Rentals/ReturnCar/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReturnCar(Guid id,
+            [Bind("Id,ReturnDate,KilometersAtRental")] ReturnCarViewModel returnCarViewModel)
+        {
+            if (id != returnCarViewModel.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid) return View(returnCarViewModel); // validation errors
+
+            try
+            {
+                var updatedRental = await rentalsService.ReturnRental(returnCarViewModel);
+                if (updatedRental == null)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return Problem();
+                // log as well!
+            }
         }
 
         // TODO: maybe use for cancelations
@@ -137,23 +152,19 @@ namespace GoodCarRentals.Controllers
         // }
 
         // POST: Rentals/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var rental = await _context.Rentals.FindAsync(id);
-            if (rental != null)
-            {
-                _context.Rentals.Remove(rental);
-            }
+        // [HttpPost, ActionName("Delete")]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> DeleteConfirmed(Guid id)
+        // {
+        //     var rental = await _context.Rentals.FindAsync(id);
+        //     if (rental != null)
+        //     {
+        //         _context.Rentals.Remove(rental);
+        //     }
+        //
+        //     await _context.SaveChangesAsync();
+        //     return RedirectToAction(nameof(Index));
+        // }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool RentalExists(Guid id)
-        {
-            return _context.Rentals.Any(e => e.Id == id);
-        }
     }
 }

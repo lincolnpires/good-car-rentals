@@ -1,4 +1,4 @@
-@model GoodCarRentals.Data.Models.Rental
+@model RentalDetailsViewModel
 
 @{
     ViewData["Title"] = "Rental Details";
@@ -10,30 +10,42 @@
     <h4>Rental</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RentalDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RentalDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReturnDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReturnDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalCost)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TotalCost)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsReturned)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsReturned)
-        </dd>
+      <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.CustomerName)
+      </dt>
+      <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.CustomerName)
+      </dd>
+      <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.CarDetails)
+      </dt>
+      <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.CarDetails)
+      </dd>
+      <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.RentalDate)
+      </dt>
+      <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.RentalDate)
+      </dd>
+      <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ReturnDate)
+      </dt>
+      <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ReturnDate)
+      </dd>
+      <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.TotalCost)
+      </dt>
+      <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.TotalCost)
+      </dd>
+      <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.IsReturned)
+      </dt>
+      <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.IsReturned)
+      </dd>
     </dl>
 </div>
 <div>

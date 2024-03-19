@@ -1,13 +1,22 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using GoodCarRentals.Application;
 using GoodCarRentals.Data;
+using GoodCarRentals.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the iac container.
 builder.Services.AddDbContext<CarRentalsContext>();
 builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<RentalsService>();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters(); // I just found this, and it's cool! Hope it works!
+builder.Services.AddTransient<IValidator<RentCarViewModel>,RentCarValidator>();
+builder.Services.AddTransient<IValidator<ReturnCarViewModel>, ReturnCarValidator>();
 
 var app = builder.Build();
 // From here, all is to Configure the HTTP request pipeline.

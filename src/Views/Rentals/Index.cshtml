@@ -1,4 +1,4 @@
-@model IEnumerable<GoodCarRentals.Data.Models.Rental>
+@model IEnumerable<RentalDetailsViewModel>
 
 @{
     ViewData["Title"] = "All Rentals";
@@ -12,17 +12,17 @@
 <table class="table">
     <thead>
         <tr>
+          <th>
+            @Html.DisplayNameFor(model => model.CustomerName)
+          </th>
+          <th>
+            @Html.DisplayNameFor(model => model.CarDetails)
+          </th>
             <th>
                 @Html.DisplayNameFor(model => model.RentalDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ReturnDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalCost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsReturned)
             </th>
             <th></th>
         </tr>
@@ -30,17 +30,17 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+          <td>
+            @Html.DisplayFor(modelItem => item.CustomerName)
+          </td>
+          <td>
+                @Html.DisplayFor(modelItem => item.CarDetails)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RentalDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReturnDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalCost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsReturned)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
